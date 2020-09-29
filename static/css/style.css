@@ -8797,11 +8797,11 @@ h1, h2, h3, h4, h5,
           position: relative;
           letter-spacing: 4px;
           z-index: 0; }
-          .owl-carousel.home-slider .slider-item .slider-text h2:before, .owl-carousel.home-slider .slider-item .slider-text h2:after {
-            position: absolute;
-            content: '';
-            background: rgba(255, 255, 255, 0.2);
-            z-index: -1; }
+          /*.owl-carousel.home-slider .slider-item .slider-text h2:before, .owl-carousel.home-slider .slider-item .slider-text h2:after {*/
+          /*  position: absolute;*/
+          /*  content: '';*/
+          /*  background: rgba(255, 255, 255, 0.2);*/
+          /*  z-index: -1; }*/
           .owl-carousel.home-slider .slider-item .slider-text h2:before {
             width: 130px;
             height: 1px;

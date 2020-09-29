@@ -25,5 +25,4 @@ urlpatterns = [
     path('events', views.events, name="events"),
     path('blog', views.blog, name="blog"),
     path('contact', views.contact, name="contact"),
-    # path('about', views.about, name="about"),
 ]

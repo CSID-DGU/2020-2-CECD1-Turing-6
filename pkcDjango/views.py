@@ -1,14 +1,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from .models.user import User
+from django.db import connection
 
 
 def index(request):
-    list = User.objects.order_by('-regDate')[:20]
+    # try:
+    #     cursor = connection.cursor()
+    #     ins = "SELECT * FROM tblUser WHERE status = 1 ORDER BY regDate DESC"
+    #     res = cursor.execute(ins)
+    #     list = cursor.fetchall()
+    #     connection.close()
+    # except:
+    #     connection.rollback()
+    #     print("query failed")
+
+    list = User.objects.raw('SELECT * FROM tblUser WHERE status = 1 ORDER BY regDate DESC')
+    # for row in list:
+    #     print(', '.join(
+    #         ['{}: {}'.format(field, getattr(row, field))
+    #          for field in ['id', 'name', 'email']]
+    #     ))
+
+    # list = User.objects.order_by('-regDate')[:20]
     # output = ', '.join([str(item.id) for item in list])
-    context = {'list': list}
+    # context = {'list': list}
     # return HttpResponse(output)
-    return render(request, "index.html", context)
+    return render(request, "index.html", {'list': list})
 
 
 def about(request):

@@ -9,7 +9,9 @@ function callJson(url, sendData, callback){
         data : sendData,
         success : function(data){
             console.log("[AJAX RESPONSE] " + data);
-            callback(JSON.parse(data));
+            console.log(data)
+            // callback(JSON.parse(data));
+            callback(data);
         },
         error : function(req, stat, err){
             console.log("[AJAX ERROR] REQUEST : " + req + " / STATUS : " + stat + " / ERROR : " + err);

@@ -20,12 +20,17 @@ def signIn(request):
     print(password)
     data = {}
     if userSVC.checkUser(email):
+        data["returnCode"] = 0
         data["returnMessage"] = "already exists"
+        # data["returnMessage"] = "already exists"
     else:
+        data["returnCode"] = 1
         data["returnMessage"] = "available"
+        # data["returnMessage"] = "available"
     print(json.dumps(data, separators=(',', ':')))
-    return json.dumps(data, separators=(',', ':'))
-
+    print(JsonResponse(data))
+    return JsonResponse(data)
+    # return HttpResponse(json.dumps(data), "application/json")
 
 def about(request):
     context = {}

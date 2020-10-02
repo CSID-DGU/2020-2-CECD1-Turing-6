@@ -1,21 +1,8 @@
-import json
 import django
-from django.db import models
-from django.utils import timezone
-from django.conf import settings
-from django.contrib.contenttypes.models import ContentType
-from django.utils.translation import ugettext_lazy as _, ugettext
-from django.urls.base import reverse
-from django.core.serializers.json import DjangoJSONEncoder
-from django.db.models.base import ModelBase
-
-from django.db.models.signals import post_migrate
-from django.contrib.auth.models import Permission
-
-import datetime
-import decimal
-
 from django.core import serializers
+from django.core.serializers.json import DjangoJSONEncoder
+from django.db import models
+import json
 
 
 class User(models.Model):
@@ -36,4 +23,7 @@ class User(models.Model):
 
     def __str__(self):
         return "{} , {}, {}".format(self.id, self.email, self.name)
+        # return json.dumps(self, cls=DjangoJSONEncoder)
         # return serializers.serialize("json", self)
+        # print(json.dumps(self))
+        # return json.dumps(self)

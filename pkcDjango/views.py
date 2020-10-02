@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from .models.user import User
 from django.db import connection
+from django.http import JsonResponse
 
 
 def index(request):
@@ -27,6 +28,18 @@ def index(request):
     # context = {'list': list}
     # return HttpResponse(output)
     return render(request, "index.html", {'list': list})
+
+
+def signIn(request):
+    email = request.GET.get("email")
+    password = request.GET.get("password")
+    data: {
+        'isTaken': User.objects.filter(email__iexact=email).exists()
+    }
+    if data['isTaken']:
+        data["errorMsg"] = "already exists"
+    return JsonResponse(data)
+
 
 
 def about(request):
@@ -57,3 +70,8 @@ def blog(request):
 def contact(request):
     context = {}
     return render(request, "contact.html", context)
+
+
+def login(request):
+    context = {}
+    return render(request, "login.html", context)

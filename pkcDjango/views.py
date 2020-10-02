@@ -1,45 +1,30 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from .models.user import User
-from django.db import connection
 from django.http import JsonResponse
 
+from .models.user import User
+from .services import userSVC
+
+from django.core import serializers
+import json
 
 def index(request):
-    # try:
-    #     cursor = connection.cursor()
-    #     ins = "SELECT * FROM tblUser WHERE status = 1 ORDER BY regDate DESC"
-    #     res = cursor.execute(ins)
-    #     list = cursor.fetchall()
-    #     connection.close()
-    # except:
-    #     connection.rollback()
-    #     print("query failed")
-
-    list = User.objects.raw('SELECT * FROM tblUser WHERE status = 1 ORDER BY regDate DESC')
-    # for row in list:
-    #     print(', '.join(
-    #         ['{}: {}'.format(field, getattr(row, field))
-    #          for field in ['id', 'name', 'email']]
-    #     ))
-
-    # list = User.objects.order_by('-regDate')[:20]
-    # output = ', '.join([str(item.id) for item in list])
-    # context = {'list': list}
-    # return HttpResponse(output)
-    return render(request, "index.html", {'list': list})
+    list = userSVC.userList(20, '-id')
+    return render(request, "index.html", {'list': list, 'jStr': serializers.serialize("json", list)})
 
 
 def signIn(request):
-    email = request.GET.get("email")
-    password = request.GET.get("password")
-    data: {
-        'isTaken': User.objects.filter(email__iexact=email).exists()
-    }
-    if data['isTaken']:
-        data["errorMsg"] = "already exists"
-    return JsonResponse(data)
-
+    email = request.POST.get("email")
+    password = request.POST.get("password")
+    print(email)
+    print(password)
+    data = {}
+    if userSVC.checkUser(email):
+        data["returnMessage"] = "already exists"
+    else:
+        data["returnMessage"] = "available"
+    print(json.dumps(data, separators=(',', ':')))
+    return json.dumps(data, separators=(',', ':'))
 
 
 def about(request):

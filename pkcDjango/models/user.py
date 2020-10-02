@@ -15,6 +15,8 @@ from django.contrib.auth.models import Permission
 import datetime
 import decimal
 
+from django.core import serializers
+
 
 class User(models.Model):
     email = models.CharField(max_length=32)
@@ -31,3 +33,7 @@ class User(models.Model):
 
     class Meta:
         db_table = "tblUser"
+
+    def __str__(self):
+        return "{} , {}, {}".format(self.id, self.email, self.name)
+        # return serializers.serialize("json", self)

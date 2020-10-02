@@ -25,5 +25,8 @@ urlpatterns = [
     path('events', views.events, name="events"),
     path('blog', views.blog, name="blog"),
     path('contact', views.contact, name="contact"),
-    path('login', views.login, name="login")
+    path('login', views.login, name="login"),
+
+
+    path("api/userLogin", views.signIn, name="")
 ]

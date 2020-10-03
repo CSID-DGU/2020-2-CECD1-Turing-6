@@ -27,3 +27,6 @@ class User(models.Model):
         # return serializers.serialize("json", self)
         # print(json.dumps(self))
         # return json.dumps(self)
+
+    def test(self):
+        print("::")

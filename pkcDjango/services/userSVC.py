@@ -10,3 +10,4 @@ def userList(limit=None, order='-id', **filters):
 
 def checkUser(email):
     return User.objects.filter(email__exact=email).exists()
+

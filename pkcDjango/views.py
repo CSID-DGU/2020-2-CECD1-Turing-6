@@ -8,15 +8,19 @@ from .services import userSVC
 from django.core import serializers
 import json
 
+from .utils import Utils
+
 
 def index(request):
     list = userSVC.userList(20, '-id')
-    return render(request, "index.html", {'list': list, 'jStr': serializers.serialize("json", list)})
+    return render(request, "index.html", Utils.response(1, "", list))
 
 
 def signIn(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
+    print(email)
+    print(password)
     data = {}
     if userSVC.checkUser(email):
         data["returnCode"] = 0

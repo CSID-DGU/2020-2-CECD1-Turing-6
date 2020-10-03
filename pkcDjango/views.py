@@ -19,20 +19,12 @@ def index(request):
 def signIn(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
-    print(email)
-    print(password)
-    data = {}
     if userSVC.checkUser(email):
-        data["returnCode"] = 0
-        data["returnMessage"] = "already exists"
-        # data["returnMessage"] = "already exists"
+        return JsonResponse(Utils.response(0, "already exists"))
     else:
-        data["returnCode"] = 1
-        data["returnMessage"] = "available"
-        # data["returnMessage"] = "available"
-    print(json.dumps(data, separators=(',', ':')))
-    print(JsonResponse(data))
-    return JsonResponse(data)
+        return JsonResponse(Utils.response(1, "available"))
+    # print(json.dumps(data, separators=(',', ':')))
+    # print(JsonResponse(data))
     # return HttpResponse(json.dumps(data), "application/json")
 
 def about(request):

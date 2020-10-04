@@ -12,7 +12,8 @@
                         email: email,
                         password: password
                     }, function(data){
-                        console.log(data);
+                        if(data.returnCode != 1) swal ( "알림" ,  data.returnMessage, "info" );
+                        else location.href = "/"
                     }
                 )
             });

@@ -22,6 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'iq618(6vbqx6*2*a-p1@yrz3#gl#zx686xiz687=ws_oz*8y90'
 
+AES_KEY = 'pkcd931018950503'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -79,7 +80,7 @@ DATABASES = {
     'default': {
         # 'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'cs_web',
+        'NAME': 'autoParts',
         'USER': 'root',
         'PASSWORD': 'pickle!@#$',
         'HOST': 'picklecode.co.kr',
@@ -90,6 +91,7 @@ DATABASES = {
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
+AUTH_USER_MODEL = 'pkcDjango.User'
 
 AUTH_PASSWORD_VALIDATORS = [
     {

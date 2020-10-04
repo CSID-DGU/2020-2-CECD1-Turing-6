@@ -1,4 +1,6 @@
-from pkcDjango.models.user import User
+# from pkcDjango.models.user import User
+from pkcDjango.models import User
+from pkcDjango.utils import Utils
 
 
 def userList(limit=None, order='-id', **filters):
@@ -11,3 +13,15 @@ def userList(limit=None, order='-id', **filters):
 def checkUser(email):
     return User.objects.filter(email__exact=email).exists()
 
+
+def userLogin(email, password):
+    user = User.objects.filter(email__exact=email, password__exact=Utils.AESCipher().encrypt(password))[:1]
+    return user
+
+
+def userJoin(email, password, name, nick):
+    passphrase = Utils.AESCipher().encrypt(password)
+    print(passphrase)
+    print(len(passphrase))
+    user = User(email=email, password=passphrase, name=name, nick=nick, sex=1, status=1)
+    user.save()

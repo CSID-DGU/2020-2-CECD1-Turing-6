@@ -14,7 +14,16 @@
                         name: name,
                         nick: nick
                     }, function(data){
-                        console.log(data);
+                        if(data.returnCode === 1){
+                            swal({
+                                title: "알림",
+                                text: data.returnMessage,
+                                icon: "success",
+                                closeOnClickOutside: false,
+                            }).then((result) => {
+                                if (result) location.href = "/";
+                            });
+                        }
                     }
                 )
             });

@@ -20,8 +20,11 @@ def userLogin(email, password):
 
 
 def userJoin(email, password, name, nick):
-    passphrase = Utils.AESCipher().encrypt(password)
-    print(passphrase)
-    print(len(passphrase))
-    user = User(email=email, password=passphrase, name=name, nick=nick, sex=1, status=1)
-    user.save()
+    User.objects.create_user(email, password, name=name, nick=nick)
+    joinedUser = User.objects.get(email=email)
+    return joinedUser
+    # passphrase = Utils.AESCipher().encrypt(password)
+    # print(passphrase)
+    # print(len(passphrase))
+    # user = User(email=email, password=passphrase, name=name, nick=nick, sex=1, status=1)
+    # user.save()

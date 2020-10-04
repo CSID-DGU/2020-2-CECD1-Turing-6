@@ -1,9 +1,10 @@
+from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from .utils import Utils
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core import serializers
-
+from django.contrib.auth import login, logout
 from .services import userSVC
 from django.forms.models import model_to_dict
 
@@ -11,7 +12,7 @@ from django.forms.models import model_to_dict
 def index(request):
     list = userSVC.userList(20, '-id')
     jStr = serializers.serialize("json", list)
-    data = {"list": list, "jStr": jStr}
+    data = {"list": list, "jStr": jStr, "user": request.user}
     return render(request, "index.html", Utils.response(1, "", data))
 
 
@@ -19,11 +20,17 @@ def signIn(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
 
-    ret = userSVC.userLogin(email, password)
-    if ret:
-        return JsonResponse(Utils.response(1, "succ", serializers.serialize("json", ret)))
+    user = authenticate(email=email, password=password)
+    if user is not None:
+        login(request, user)
+        return JsonResponse(Utils.response(1, "succ"))
     else:
         return JsonResponse(Utils.response(-1, "일치하는 계정이 없습니다."))
+
+
+def signOut(request):
+    logout(request)
+    return JsonResponse(Utils.response(1, "로그아웃 되었습니다."))
 
 
 def joinUser(request):
@@ -34,8 +41,9 @@ def joinUser(request):
     if userSVC.checkUser(email):
         return JsonResponse(Utils.response(-1, "already exists"))
 
-    userSVC.userJoin(email, password, name, nick)
-    return JsonResponse(Utils.response(1, "succ"))
+    user = userSVC.userJoin(email, password, name, nick)
+    login(request, user)
+    return JsonResponse(Utils.response(1, "가입되었습니다."))
 
 
 def about(request):
@@ -68,7 +76,7 @@ def contact(request):
     return render(request, "contact.html", context)
 
 
-def login(request):
+def loginUser(request):
     context = {}
     return render(request, "login.html", context)
 

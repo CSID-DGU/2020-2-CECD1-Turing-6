@@ -1,3 +1,11 @@
+<script>
+    $(document).ready(function(){
+        $("#jLogout").click(function(){
+            callJson("/api/userLogout", null, function(){location.href = "/"});
+        });
+    });
+</script>
+
 <div class="wrap">
 		<div class="container">
 			<div class="row">
@@ -35,7 +43,11 @@
 					<li class="nav-item"><a href="/events" class="nav-link">Events</a></li>
 					<li class="nav-item"><a href="/blog" class="nav-link">Blog</a></li>
 					<li class="nav-item"><a href="/contact" class="nav-link">Contact</a></li>
-					<li class="nav-item cta"><a href="/login" class="nav-link">Login</a></li>
+                    {% if user.id != None %}
+					    <li class="nav-item cta"><a class="nav-link" id="jLogout">Logout</a></li>
+                    {% else %}
+                        <li class="nav-item cta"><a href="/login" class="nav-link">Login</a></li>
+                    {% endif %}
 				</ul>
 			</div>
 		</div>

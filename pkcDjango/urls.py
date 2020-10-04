@@ -25,10 +25,11 @@ urlpatterns = [
     path('events', views.events, name="events"),
     path('blog', views.blog, name="blog"),
     path('contact', views.contact, name="contact"),
-    path('login', views.login, name="login"),
+    path('login', views.loginUser, name="login"),
     path('join', views.join, name="join"),
 
 
     path('api/userLogin', views.signIn, name=""),
-    path('api/userJoin', views.joinUser, name="")
+    path('api/userJoin', views.joinUser, name=""),
+    path('api/userLogout', views.signOut, name=""),
 ]

@@ -35,6 +35,11 @@ def signIn(request):
     return JsonResponse(data)
     # return HttpResponse(json.dumps(data), "application/json")
 
+
+def joinUser(request):
+    email = request.POST.get("email")
+
+
 def about(request):
     context = {}
     return render(request, "about.html", context)
@@ -68,3 +73,8 @@ def contact(request):
 def login(request):
     context = {}
     return render(request, "login.html", context)
+
+
+def join(request):
+    context = {}
+    return render(request, "join.html", context)

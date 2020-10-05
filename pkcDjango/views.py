@@ -51,6 +51,11 @@ def about(request):
     return render(request, "about.html", context)
 
 
+def analyzer(request):
+    context = {}
+    return render(request, "analyzer.html", context)
+
+
 def ministries(request):
     context = {}
     return render(request, "ministries.html", context)

@@ -9079,22 +9079,22 @@ h1, h2, h3, h4, h5,
     bottom: 0;
     top: 0;
     z-index: -2; }
-  .gallery:before {
-    width: 130px;
-    height: 1px;
-    top: 100px;
-    left: 50%;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%); }
-  .gallery:after {
-    width: 1px;
-    height: 150px;
-    left: 50%;
-    top: 60px;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    transform: translateX(-50%); }
+  /*.gallery:before {*/
+  /*  width: 130px;*/
+  /*  height: 1px;*/
+  /*  top: 100px;*/
+  /*  left: 50%;*/
+  /*  -webkit-transform: translateX(-50%);*/
+  /*  -ms-transform: translateX(-50%);*/
+  /*  transform: translateX(-50%); }*/
+  /*.gallery:after {*/
+  /*  width: 1px;*/
+  /*  height: 150px;*/
+  /*  left: 50%;*/
+  /*  top: 60px;*/
+  /*  -webkit-transform: translateX(-50%);*/
+  /*  -ms-transform: translateX(-50%);*/
+  /*  transform: translateX(-50%); }*/
   .gallery:hover .overlay {
     opacity: .5; }
   .gallery:hover:after, .gallery:hover:before {
@@ -9332,22 +9332,22 @@ textarea.form-control {
       background: #ce0f3d;
       z-index: -1;
       opacity: .4; }
-    .heading-section .subheading:before {
-      width: 130px;
-      height: 1px;
-      top: -20px;
-      left: 50%;
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%); }
-    .heading-section .subheading:after {
-      width: 1px;
-      height: 150px;
-      left: 50%;
-      top: -60px;
-      -webkit-transform: translateX(-50%);
-      -ms-transform: translateX(-50%);
-      transform: translateX(-50%); }
+    /*.heading-section .subheading:before {*/
+    /*  width: 130px;*/
+    /*  height: 1px;*/
+    /*  top: -20px;*/
+    /*  left: 50%;*/
+    /*  -webkit-transform: translateX(-50%);*/
+    /*  -ms-transform: translateX(-50%);*/
+    /*  transform: translateX(-50%); }*/
+    /*.heading-section .subheading:after {*/
+    /*  width: 1px;*/
+    /*  height: 150px;*/
+    /*  left: 50%;*/
+    /*  top: -60px;*/
+    /*  -webkit-transform: translateX(-50%);*/
+    /*  -ms-transform: translateX(-50%);*/
+    /*  transform: translateX(-50%); }*/
   .heading-section h2 {
     font-size: 40px;
     font-weight: 600;

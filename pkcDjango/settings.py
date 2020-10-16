@@ -83,8 +83,8 @@ DATABASES = {
         # 'ENGINE': 'django.db.backends.sqlite3',
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'autoParts',
-        'USER': 'root',
-        'PASSWORD': 'pickle!@#$',
+        'USER': 'autoparts',
+        'PASSWORD': 'csid!@#$',
         'HOST': 'picklecode.co.kr',
         'PORT': '3306'
     }

@@ -1,10 +1,118 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            let id = '{{ user.id }}';
+            if(id === "None")
+                swal("알림" ,  "로그인 후 이용해 주세요", "error").then(() => {
+                    location.href = "/"
+                });
+
+            $("#upload").click(function (event){
+                event.preventDefault();
+                let data = new FormData($("#uploadForm")[0]);
+                // console.log(...data);
+                $.ajax({
+                    type: "POST",
+                    enctype: 'multipart/form-data',
+                    url : "/api/upload",
+                    cache : false,
+                    async : true,
+                    method : "post",
+                    dataType : "json",
+                    contentType: false,
+                    processData: false,
+                    data : data,
+                    success : function(data){
+                        console.log("[AJAX RESPONSE] " + data);
+                        let retData = data;
+                        if(retData.returnCode > 0){
+                            if(retData.returnCode > 1){
+                                swal("알림" ,  retData.returnMessage, "info");
+                            }else {
+                                swal("알림" ,  retData.returnMessage, "success");
+                            }
+                        }else swal ( "알림" ,  "오류가 발생하였습니다.\n관리자에게 문의하세요.", "error" );
+                    },
+                    error : function(req, stat, err){
+                        console.log("[AJAX ERROR] REQUEST : " + req + " / STATUS : " + stat + " / ERROR : " + err);
+                    }
+                });
+            });
+
+            $(document).on("click", ".browse", function(){
+                var idx = $(this).attr("idx");
+                var file = $(this).parents().find(".file").eq(idx);
+                file.trigger("click");
+            });
+
+            $('input.imgFile[type=file]').change(function(e){
+                var idx = $(this).attr("idx");
+                var fileName = e.target.files[0].name;
+                $("#file" + idx).val(fileName);
+
+                var reader = new FileReader();
+                reader.onload = function(e){
+                    $("#preview" + idx).attr("src", e.target.result);
+                    $("#preview" + idx).fadeIn();
+                };
+                reader.readAsDataURL(this.files[0]);
+            });
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end js-fullheight">
+                <div class="col-md-9 ftco-animate pb-5">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
+                            class="fa fa-chevron-right"></i></a></span> <span>Analyzer <i class="fa fa-chevron-right"></i></span>
+                    </p>
+                    <h1 class="mb-0 bread">Analyzer</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="contact-wrap w-100 p-md-5 p-4">
+
+                <form method="POST" enctype="multipart/form-data" class="contactForm" id="uploadForm">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="label" for="file0">분석하고자 하는 이미지</label>
+                                <input type="file" name="img" class="file imgFile" idx="0" accept="image/*" style="display: none;">
+                                <div class="input-group">
+                                    <input type="text" class="form-control jImg" disabled placeholder="업로드 파일명" id="file0" />
+                                    <div class="input-group-append">
+                                        <button type="button" class="browse btn btn-sm btn-primary" idx="0">파일 선택
+                                        </button>
+                                    </div>
+                                </div>
+{#                                <label class="label" for="img">분석하고자 하는 이미지</label>#}
+{#                                <input type="file" class="form-control imgFile" name="img" id="img" idx="0">#}
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <img src="" id="preview0" class="img-thumbnail text-center" style="display: none"/>
+                            </div>
+                        </div>
+                         <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="button" id="upload" value="Upload & Analyze" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

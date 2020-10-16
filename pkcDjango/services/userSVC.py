@@ -1,5 +1,6 @@
 # from pkcDjango.models.user import User
 from pkcDjango.models import User
+from pkcDjango.models import File
 from pkcDjango.utils import Utils
 
 
@@ -28,3 +29,13 @@ def userJoin(email, password, name, nick):
     # print(len(passphrase))
     # user = User(email=email, password=passphrase, name=name, nick=nick, sex=1, status=1)
     # user.save()
+
+
+def uploadFile(post, user, img):
+    file = File()
+    file.originName = img
+    file.userKey = user.id
+    file.path = img
+    print(img)
+    file.save()
+    return file

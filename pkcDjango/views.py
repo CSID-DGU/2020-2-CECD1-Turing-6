@@ -46,6 +46,17 @@ def joinUser(request):
     return JsonResponse(Utils.response(1, "가입되었습니다."))
 
 
+def upload(request):
+    if request.method == 'POST':
+        file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
+        if file:
+            return JsonResponse(Utils.response(1, "succ"))
+        else:
+            return JsonResponse(Utils.response(2, "파일업로드 실패"))
+    else:
+        return JsonResponse(Utils.response(-1, "통신 방식이 잘못되었습니다."))
+
+
 def about(request):
     context = {}
     return render(request, "about.html", context)

@@ -54,3 +54,20 @@ class User(AbstractBaseUser):
         return "{} , {}, {}".format(self.id, self.email, self.name)
 
 
+class File(models.Model):
+    userKey = models.IntegerField(default=0)
+    id = models.IntegerField(
+        primary_key=True,
+        unique=True,
+        editable=False,
+        verbose_name="id"
+    )
+    originName = models.CharField(max_length=100)
+    path = models.FileField(null=True, blank=True, upload_to="tempFiles/")
+
+    class Meta:
+        db_table = "tblFile"
+
+    def __str__(self):
+        return self.title
+

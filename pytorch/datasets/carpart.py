@@ -9,6 +9,8 @@ import numpy as np
 import torch
 import torch.utils.data as data
 from PIL import Image, ImageOps
+import matplotlib as mpl
+mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 
 def padding(img, expected_size):
@@ -40,23 +42,34 @@ class CarPart(data.Dataset):
     ):
         self.root = root
         self.image_root = self.root+"/image"
-        self.label_root = self.root+"/label"
+        self.label_root = self.root+"/label2"
         self.transform = transform
         self.mean_rgb = np.array([123.68, 116.779, 103.939])
-        self.classMap = {'Emblem': 0,
-        'Quarter Glass (R)': 1,
-        'Rear Door (R)': 2, 'Rear Wheel (R)': 3, 'Rear bumper': 4, 'Front Door (R)': 5,'Front Door (L)': 5, '[R] A Pillar (Front Pillar)': 6,
-        'Trunk Door': 7, 'Rear Door Handle/Catch (R)': 8, 'Front Door Glass (R)': 9, 'Tail Lamp (L)': 10, '[R] Roof Rail': 11,
-         'Front Fender (R)': 12, 'Tail Lamp (R)': 13, '[R] D pillar (Quarter Panel)': 14, 'Rear Door Glass (R)': 15,'Rear Door Glass (L)': 15,
-          'Rear Glass': 16, '[R] B pillar (Center Panel)': 17, 'Rear Fender (R)': 18, 'Front bumper':19,
-          'Rediator Grille':20,'[L] A Pillar (Front Pillar)':6, '[L] B pillar (Center Panel)':17,'Head Lamp (L)':21,
-          'Head Lamp (R)':21,'Front Door Glass (L)':9, 'Bonnet/Hood':22,'Rear Tire (L)':23,'Rear Tire (R)':23,
-          'Front Tire (R)':23, 'Rear Tire (L)':23, 'Rear Tire (R)':23,'Front Tire (L)':23, 'Side View Mirror (R)':24,
-          'Side View Mirror (L)':24, 'Rear Wheel (L)':3, 'Front Wheel (R)':25,'Front Wheel (L)':25,
-          'Front Door Handle/Catch (R)':8,'Front Door Handle/Catch (L)':8, 'Rear Door Handle/Catch (L)': 8,
-          '[L] C pillar (Rear Pillar)':26, '[R] C pillar (Rear Pillar)':26, 'Front Glass':27,'Quarter Glass (L)':1,
-          'Front Fender (L)':12, 'Rear Door (L)':2, 'Rear Fender (L)':12,  '[L] D pillar (Quarter Panel)':14,
-          '[L] Roof Rail':11, 'Quarter Door Glass (R)' : 28, 'Rear Light':29}
+        self.classMap = {
+        'Quarter Glass (R)': 1,'Quarter Glass (L)':1,
+        'Rear Door (R)': 2,'Rear Door (L)':2,
+        'Rear Wheel (R)': 3,'Rear Wheel (L)':3,
+        'Rear bumper': 4,
+        'Front Door (R)': 5,'Front Door (L)': 5,
+        '[R] A Pillar (Front Pillar)': 6, '[L] A Pillar (Front Pillar)':6,
+        'Trunk Door': 7,
+         'Rear Door Handle/Catch (R)': 8,'Front Door Handle/Catch (L)':8,
+         'Front Door Glass (R)': 9,'Front Door Glass (L)':9,
+         'Tail Lamp (L)': 10, 'Tail Lamp (R)': 10,
+         '[R] Roof Rail': 11,'[L] Roof Rail':11,
+         'Front Fender (R)': 12,'Front Fender (L)':12,
+         '[R] D pillar (Quarter Panel)': 13,'[L] D pillar (Quarter Panel)':13,
+         'Rear Door Glass (R)': 14,'Rear Door Glass (L)': 14,
+          'Rear Light':15,
+          '[R] B pillar (Center Panel)': 16,'[L] B pillar (Center Panel)':16,
+          'Rear Fender (R)': 17,'Rear Fender (L)':17,
+          'Front bumper':18,
+          'Rediator Grille':19,
+          'Head Lamp (R)':20,'Head Lamp (L)':20,
+          'Bonnet/Hood':21,
+          '[L] C pillar (Rear Pillar)':22, '[R] C pillar (Rear Pillar)':22,
+          'Quarter Door Glass (R)' : 23, 'Quarter Door Glass (L)' : 23,
+          }
 
         self.num_classes = max(self.classMap.values())
         self.images = [self.image_root + "/" + i for i in os.listdir(self.image_root)]
@@ -67,13 +80,21 @@ class CarPart(data.Dataset):
                 data = json.load(f)
             self.jsons.append(data)
 
+        cls_dist = np.zeros(31)
+        cls_cnt = list()
+        parts_in_image =list()
         valid_images = list()
         for i in range(len(self.images)):
             img_path = self.images[i]
             img_id = img_path.split("/")[-1]
             cls, label =  self.parseLabel(img_id, 0, 0)
-            if len(cls)!=0:
+            if len(cls)>0:
+                parts_in_image.append(len(cls))
+                cls_dist[cls] += 1
+                cls_cnt += cls
                 valid_images.append( self.images[i] )
+        #plt.hist(cls_cnt,bins=30)
+        #plt.show()
         self.valid_images = valid_images
 
     def parseLabel(self, id, max_size, pad):
@@ -88,6 +109,7 @@ class CarPart(data.Dataset):
                 raw=json[id]
                 for shape in raw['regions']:
                     part = shape['region_attributes']['part']
+                    #print( " -> " ,part)
                     parts.append(part)
                     try:
                         cls_ = self.classMap[shape['region_attributes']['part']]#+1
@@ -129,6 +151,7 @@ class CarPart(data.Dataset):
         img = Image.open(img_path).convert("RGB")
         max_size = max(img.height, img.width)
         pad = (max_size - min(img.height, img.width))//2
+        #print("========")
         cls, mask = self.parseLabel(img_id, max_size, pad)
         img = np.uint8(resize_with_padding(img, (max_size, max_size)))
 
@@ -136,6 +159,7 @@ class CarPart(data.Dataset):
         if self.transform is not None:
             transformed = self.transform(image = img, mask=mask)
             img = transformed['image']
+
             mask = transformed['mask']
 
         return img, mask
@@ -146,6 +170,7 @@ class CarPart(data.Dataset):
 if __name__=="__main__":
     import random
     from albumentations import *
+
 
     aug = Compose([
                  HorizontalFlip(0.5),
@@ -165,12 +190,18 @@ if __name__=="__main__":
                  Cutout(num_holes=5, max_h_size=30, max_w_size=30,p=0.5)
                 ], p=1)
 
-    dataset = CarPart(transform=aug)
-    img, mask = dataset[random.randint(0,len(dataset))]
 
-    plt.subplot(2,1,1)
-    plt.imshow(img)
-    plt.subplot(2,1,2)
-    #plt.imshow(img)
-    plt.imshow(mask)
-    plt.show()
+    dataset = CarPart(transform=aug)
+    print(len(dataset))
+    img, mask = dataset[400]
+
+    print(np.unique(mask))
+
+    if True:
+        plt.subplot(2,2,1)
+        plt.imshow(img)
+        plt.subplot(2,2,2)
+        plt.imshow(mask)
+        plt.show()
+        #cv2.imshow('mask', mask)
+        #cv2.waitKey(0)

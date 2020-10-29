@@ -1,6 +1,7 @@
 # from pkcDjango.models.user import User
 from pkcDjango.models import User
 from pkcDjango.models import File
+from pkcDjango.models import Faq
 from pkcDjango.utils import Utils
 
 
@@ -9,6 +10,12 @@ def userList(limit=None, order='-id', **filters):
     if limit:
         return User.objects.filter(**filters).order_by(order)[:limit]
     return User.objects.filter(**filters).order_by(order)
+
+
+def faqList(limit=None, order="-id", **filters):
+    if limit:
+        return Faq.objects.filter(**filters).order_by(order)[:limit]
+    return Faq.objects.filter(**filters).order_by(order)
 
 
 def checkUser(email):

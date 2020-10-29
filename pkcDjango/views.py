@@ -57,6 +57,19 @@ def upload(request):
         return JsonResponse(Utils.response(-1, "통신 방식이 잘못되었습니다."))
 
 
+def faq(request):
+    list = userSVC.faqList()
+    jStr = serializers.serialize("json", list)
+    data = {"list": list, "jStr": jStr, "user": request.user}
+    print(data)
+    return render(request, "faq.html", Utils.response(1, "", data))
+
+
+def history(request):
+    data = {}
+    return render(request, "history.html", Utils.response(1, "", data))
+
+
 def about(request):
     context = {}
     return render(request, "about.html", context)

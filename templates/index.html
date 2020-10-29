@@ -1,4 +1,17 @@
 {% extends "base.html" %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+            $(".jRedirect").click(function(e){
+                e.preventDefault();
+                e.stopPropagation();
+                location.href = "/analyzer";
+            })
+        });
+    </script>
+{% endblock %}
+
 {% block content %}
 {#    {{ user.email }}#}
 {#    {{ user.name }}#}
@@ -17,7 +30,7 @@
 								<h2>Welcome to Autoparts</h2>
 								<h1 class="mb-3">Perfect Parts Analyzer For Car Owners</h1>
 								<p class="mb-4 pb-3">딥러닝을 기반으로 자동차의 자동차 부품 분류를 자동으로 해주는 Autoparts를 지금 만나보세요</p>
-								<p class="mb-0"><a href="#" class="btn btn-primary py-3 px-2 px-md-4">Start your first Experience</a></p>
+								<p class="mb-0"><a href="" class="btn btn-primary py-3 px-2 px-md-4 jRedirect">Start your first Experience</a></p>
 							</div>
 						</div>
 					</div>

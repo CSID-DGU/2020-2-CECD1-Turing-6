@@ -3,22 +3,34 @@
 {% block js %}
     <script>
         $(document).ready(function(){
-            $("#login").click(function (event){
-                event.preventDefault();
+            $(".jInputLogin").keydown(function(key) {
+                if (key.keyCode == 13) {
+                    doLogin();
+                }
+            });
+
+            $(".jLogin").click(function(){
+                doLogin();
+            });
+
+            function doLogin(){
                 let email = $("#email").val()
                 let password = $("#password").val()
-                console.log(email + password);
+                if(email === "" || password === ""){
+                    swal("알림", "계정 정보를 모두 입력해 주시기 바랍니다.", "error")
+                    return;
+                }
                 callJson("/api/userLogin", {
                         email: email,
                         password: password
                     }, function(data){
-                        if(data.returnCode != 1) swal ( "알림" ,  data.returnMessage, "info" );
+                        if(data.returnCode != 1) swal ( "알림" ,  data.returnMessage, "error" );
                         else location.href = "/"
                     }
                 )
-            });
+            }
 
-            $("#join").click(function(event){
+            $(".jJoin").click(function(event){
                 event.preventDefault()
                 location.href = "/join"
             });
@@ -50,21 +62,21 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="label" for="email">Email</label>
-                                <input type="email" class="form-control" name="email" id="email"
+                                <input type="email" class="form-control jInputLogin" name="email" id="email"
                                        placeholder="email">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label class="label" for="#">Password</label>
-                                <input type="password" name="password" class="form-control" id="password"
+                                <input type="password" name="password" class="form-control jInputLogin" id="password"
                                           placeholder="password" />
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="button" id="login" value="Login" class="btn btn-primary">
-                                <input type="button" id="join" value="Join" class="btn btn-primary">
+                                <input type="button" id="login" value="Login" class="btn btn-primary jLogin">
+                                <input type="button" id="join" value="Join" class="btn btn-primary jJoin">
 {#                                <div class="submitting"></div>#}
                             </div>
                         </div>

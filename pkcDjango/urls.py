@@ -30,6 +30,8 @@ urlpatterns = [
     path('contact', views.contact, name="contact"),
     path('login', views.loginUser, name="login"),
     path('join', views.join, name="join"),
+    path('faq', views.faq, name="faq"),
+    path('history', views.history, name="history"),
 
 
     path('api/userLogin', views.signIn, name=""),

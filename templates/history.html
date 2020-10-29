@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end js-fullheight">
+                <div class="col-md-9 ftco-animate pb-5">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
+                            class="fa fa-chevron-right"></i></a></span> <span>History <i class="fa fa-chevron-right"></i></span>
+                    </p>
+                    <h1 class="mb-0 bread">History</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="ftco-section testimony-section">
+        <div class="container">
+            <div class="white-wrap w-100 p-md-5 p-4">
+                <h3 class="mb-4">Analyzer History</h3>
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <h5 class="card-header">
+                                분석 내역
+                                {#                                <button type='button' class="col-3 btn btn-primary btn-xs#}
+                                {#                                        btn-block jAdd float-right" uid="0"><i class="fa fa-plus"></i>#}
+                                {#                                    강사 추가#}
+                                {#                                </button>#}
+                            </h5>
+                            <div class="card-header">
+                                <div class="input-group">
+                                    <input type="text" value="" class="form-control jSearchText" placeholder="제목으로 검색">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary btn-xs jSearch"><i
+                                                class="fa fa-search"></i> 검색
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-hover table-responsive-lg">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">No.</th>
+                                        <th scope="col">title</th>
+                                        <th scope="col">Original Image</th>
+                                        <th scope="col">Output</th>
+                                        <th scope="col">등록일</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="dataContainer">
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">test</td>
+                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds.jpg</td>
+                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds_res.jpg</td>
+                                        <td scope="col">2020-10-28 14:12:58</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">test</td>
+                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds.jpg</td>
+                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds_res.jpg</td>
+                                        <td scope="col">2020-10-28 14:12:58</td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="col">1</th>
+                                        <td scope="col">test</td>
+                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds.jpg</td>
+                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds_res.jpg</td>
+                                        <td scope="col">2020-10-28 14:12:58</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                        <div class="card">
+                            <div class="card-body text-center" id="pager">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

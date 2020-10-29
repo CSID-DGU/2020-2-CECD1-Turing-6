@@ -71,3 +71,31 @@ class File(models.Model):
     def __str__(self):
         return self.title
 
+
+class Faq(models.Model):
+    id = models.IntegerField(
+        primary_key=True,
+        unique=True,
+        editable=False,
+        verbose_name="id"
+    )
+    title = models.CharField(max_length=256)
+    content = models.CharField(max_length=1024)
+    regDate = models.DateTimeField()
+
+    class Meta:
+        db_table = "tblFaq"
+
+
+class History(models.Model):
+    id = models.IntegerField(
+        primary_key=True,
+        unique=True,
+        editable=False,
+        verbose_name="id"
+    )
+    userId = models.IntegerField(default=0)
+    fileId = models.IntegerField(default=0)
+
+    class Meta:
+        db_table = "tblHistory"

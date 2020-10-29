@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script>
+        $(document).ready(function(){
+
+        });
+    </script>
+{% endblock %}
+
+{% block content %}
+    <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end js-fullheight">
+                <div class="col-md-9 ftco-animate pb-5">
+                    <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
+                            class="fa fa-chevron-right"></i></a></span> <span>FAQ <i class="fa fa-chevron-right"></i></span>
+                    </p>
+                    <h1 class="mb-0 bread">FAQ</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="ftco-section testimony-section">
+        <div class="container">
+            <div class="white-wrap w-100 p-md-5 p-4">
+                <h3 class="mb-4">FAQ</h3>
+
+                <div class="list-group">
+                    {% for item in returnData.list %}
+                        <a class="list-group-item list-group-item-action mb-2">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{ item.title }}</h5>
+                                <small>{{ item.regDate }}</small>
+                            </div>
+                            <p class="mb-1">
+                                {{ item.content }}
+                            </p>
+{#                            <small>Donec id elit non mi porta.</small>#}
+                        </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -11,6 +11,12 @@
 
             $("#upload").click(function (event){
                 event.preventDefault();
+                if($(".imgFile").val() === ""){
+                    swal("알림", "필수 정보를 모두 입력해 주세요", "error");
+                    return;
+                }
+
+
                 let data = new FormData($("#uploadForm")[0]);
                 // console.log(...data);
                 $.ajax({

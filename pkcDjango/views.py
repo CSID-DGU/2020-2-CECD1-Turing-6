@@ -50,6 +50,7 @@ def upload(request):
     if request.method == 'POST':
         file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
         if file:
+            NeuralNet.img_seg(file)
             return JsonResponse(Utils.response(1, "succ"))
         else:
             return JsonResponse(Utils.response(2, "파일업로드 실패"))

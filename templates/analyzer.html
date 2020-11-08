@@ -32,6 +32,7 @@
                                 swal("알림" ,  retData.returnMessage, "info");
                             }else {
                                 swal("알림" ,  retData.returnMessage, "success");
+                                //$("img#preview0").after('<img src="/media/'+retData.returnMessage+ '" id="preview1" class="img-thumbnail text-center" />');
                             }
                         }else swal ( "알림" ,  "오류가 발생하였습니다.\n관리자에게 문의하세요.", "error" );
                     },
@@ -39,6 +40,7 @@
                         console.log("[AJAX ERROR] REQUEST : " + req + " / STATUS : " + stat + " / ERROR : " + err);
                     }
                 });
+                
             });
 
             $(document).on("click", ".browse", function(){

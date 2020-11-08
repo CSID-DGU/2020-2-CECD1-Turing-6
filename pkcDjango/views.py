@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib.auth import login, logout
-from .services import userSVC
+from .services import userSVC, NeuralNet
 from django.forms.models import model_to_dict
 
 

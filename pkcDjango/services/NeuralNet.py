@@ -14,16 +14,20 @@ import torch.nn.functional as F
 from models.pspnet import PSPNet
 from torchvision.utils import save_image
 import torchvision
+from pkcDjango.models import File
 
 #model path .pht
 model_path = "./ckpt/deeplabv3.pth"
 #image_path
 img_path = "/home/yo0n/workspace2/CarPart/image"
-save_paht = ""
+save_paht = "saved.png"
 base_aug = Compose([Resize(512, 512, p=1), ], p=1)
 
-def img_seg(url)
+def img_seg(file)
     
+    #img_path = file.path
+    #extract file name
+    file_name = os.path.splitext(img_path)[0] + "_seg.png"
     #open images
     imgor = Image.open(img_path).convert("RGB")
     max_size = max(imgor.height, imgor.width)

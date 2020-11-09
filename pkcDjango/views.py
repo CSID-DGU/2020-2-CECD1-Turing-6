@@ -5,7 +5,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib.auth import login, logout
-from .services import userSVC
+from .services import userSVC, NeuralNet
 from django.forms.models import model_to_dict
 
 
@@ -50,6 +50,7 @@ def upload(request):
     if request.method == 'POST':
         file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
         if file:
+            NeuralNet.img_seg(file)
             return JsonResponse(Utils.response(1, "succ"))
         else:
             return JsonResponse(Utils.response(2, "파일업로드 실패"))

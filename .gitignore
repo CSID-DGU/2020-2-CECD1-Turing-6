@@ -1,3 +1,6 @@
 .idea
 *.DS_Store
 *.sqlite
+__pycache__
+ckpt
+dataset

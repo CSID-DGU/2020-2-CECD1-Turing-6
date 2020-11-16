@@ -9,6 +9,19 @@
 {% endblock %}
 
 {% block content %}
+{#        {{ user.email }}#}
+{#    {{ user.name }}#}
+{#    {{ returnData.jStr }}#}
+    {% for item in returnData.list %}
+        {{ item.id }}
+        {{ item.originName }}
+        {{ item.originPath }}
+        {{ item.resName }}
+        {{ item.resPath }}
+        {{ item.regDate }}
+    {% endfor %}
+
+
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
         <div class="overlay"></div>
         <div class="container">
@@ -61,27 +74,15 @@
                                     </tr>
                                     </thead>
                                     <tbody id="dataContainer">
-                                    <tr>
-                                        <th scope="col">1</th>
-                                        <td scope="col">test</td>
-                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds.jpg</td>
-                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds_res.jpg</td>
-                                        <td scope="col">2020-10-28 14:12:58</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col">1</th>
-                                        <td scope="col">test</td>
-                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds.jpg</td>
-                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds_res.jpg</td>
-                                        <td scope="col">2020-10-28 14:12:58</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="col">1</th>
-                                        <td scope="col">test</td>
-                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds.jpg</td>
-                                        <td scope="col">lsd-molecule-wallpaper-destkop-backgrounds_res.jpg</td>
-                                        <td scope="col">2020-10-28 14:12:58</td>
-                                    </tr>
+                                    {% for item in returnData.list %}
+                                        <tr>
+                                            <th scope="col">{{ forloop.counter }}</th>
+                                            <td scope="col">test</td>
+                                            <td scope="col">{{ item.originName }}</td>
+                                            <td scope="col">{{ item.resName }}</td>
+                                            <td scope="col">{{ item.regDate }}</td>
+                                        </tr>
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>

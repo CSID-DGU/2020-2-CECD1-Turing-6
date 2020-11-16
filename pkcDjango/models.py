@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth.base_user import BaseUserManager
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
@@ -38,6 +40,7 @@ class User(AbstractBaseUser):
     userType = models.IntegerField(default=1)
     name = models.CharField(max_length=32)
     nick = models.CharField(max_length=32)
+    phone = models.CharField(max_length=16)
     sex = models.IntegerField(default=0)
     bio = models.CharField(max_length=512)
     career = models.TextField()
@@ -68,8 +71,11 @@ class File(models.Model):
     class Meta:
         db_table = "tblFile"
 
+    def fileName(self):
+        return os.path.basename(self.path.name)
+
     def __str__(self):
-        return self.title
+        return self.path
 
 
 class Faq(models.Model):
@@ -87,7 +93,7 @@ class Faq(models.Model):
         db_table = "tblFaq"
 
 
-class History(models.Model):
+class Analyze(models.Model):
     id = models.IntegerField(
         primary_key=True,
         unique=True,
@@ -96,6 +102,8 @@ class History(models.Model):
     )
     userId = models.IntegerField(default=0)
     fileId = models.IntegerField(default=0)
+    resFileId = models.IntegerField(default=0)
+    status = models.IntegerField(default=1)
 
     class Meta:
-        db_table = "tblHistory"
+        db_table = "tblAnalyze"

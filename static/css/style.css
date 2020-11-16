@@ -12501,14 +12501,14 @@ h1, h2, h3, h4, h5,
 }
 
 .btn.btn-primary {
-    background: #ce0f3d;
-    border: 2px solid #ce0f3d;
+    background: #9e0c2f;
+    border: 2px solid #9e0c2f;
     color: #fff;
 }
 
 .btn.btn-primary:hover {
-    border: 2px solid #ce0f3d;
-    background: transparent;
+    border: 2px solid #9e0c2f;
+    /*background: transparent;*/
     color: #ce0f3d;
 }
 

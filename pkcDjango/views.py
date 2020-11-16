@@ -36,12 +36,13 @@ def signOut(request):
 def joinUser(request):
     email = request.POST.get("email")
     password = request.POST.get("password")
+    phone = request.POST.get("phone")
     name = request.POST.get("name")
     nick = request.POST.get("nick")
     if userSVC.checkUser(email):
         return JsonResponse(Utils.response(-1, "already exists"))
 
-    user = userSVC.userJoin(email, password, name, nick)
+    user = userSVC.userJoin(email, password, name, nick, phone)
     login(request, user)
     return JsonResponse(Utils.response(1, "가입되었습니다."))
 
@@ -50,7 +51,8 @@ def upload(request):
     if request.method == 'POST':
         file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
         if file:
-            NeuralNet.img_seg(file)
+            # NeuralNet.img_seg(file)
+            userSVC.addAnalyze(request.user.id, file.id, 0)
             return JsonResponse(Utils.response(1, "succ"))
         else:
             return JsonResponse(Utils.response(2, "파일업로드 실패"))
@@ -67,7 +69,9 @@ def faq(request):
 
 
 def history(request):
-    data = {}
+    list = userSVC.historyList(20, '-id')
+    jStr = serializers.serialize("json", list)
+    data = {"list": list, "jStr": jStr, "user": request.user}
     return render(request, "history.html", Utils.response(1, "", data))
 
 

@@ -4,14 +4,16 @@
     <script>
         $(document).ready(function(){
             $("#join").click(function(){
-                var email = $("input[name=email]").val()
-                var password = $("input[name=password]").val()
-                var name = $("input[name=name]").val()
-                var nick = $("input[name=nick]").val()
+                var email = $("input[name=email]").val();
+                var password = $("input[name=password]").val();
+                var name = $("input[name=name]").val();
+                var phone = $("input[name=phone]").val();
+                var nick = $("input[name=nick]").val();
                 callJson("/api/userJoin", {
                         email: email,
                         password: password,
                         name: name,
+                        phone: phone,
                         nick: nick
                     }, function(data){
                         if(data.returnCode === 1){
@@ -23,6 +25,8 @@
                             }).then((result) => {
                                 if (result) location.href = "/";
                             });
+                        }else{
+                            swal("알림", data.returnMessage, "error");
                         }
                     }
                 )
@@ -35,7 +39,6 @@
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
         <div class="overlay"></div>
         <div class="container">
-            <div class="row no-gutters slider-text align-items-end js-fullheight">
                 <div class="col-md-9 ftco-animate pb-5">
                     <p class="breadcrumbs mb-2"><span class="mr-2"><a href="index.html">Home <i
                             class="fa fa-chevron-right"></i></a></span> <span>Join <i class="fa fa-chevron-right"></i></span>
@@ -46,9 +49,9 @@
         </div>
     </section>
 
-    <section class="ftco-section">
+    <section class="ftco-section testimony-section">
         <div class="container">
-            <div class="contact-wrap w-100 p-md-5 p-4">
+            <div class="white-wrap w-100 p-md-5 p-4">
                 <h3 class="mb-4">Join</h3>
                 <form method="POST" id="contactForm" name="contactForm" class="contactForm">
                     <div class="row">
@@ -62,7 +65,14 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="label" for="name">Name</label>
-                                <input type="name" class="form-control" name="name" id="name"
+                                <input type="text" class="form-control" name="name" id="name"
+                                       placeholder="name">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label class="label" for="name">phone</label>
+                                <input type="text" class="form-control" name="phone" id="phone"
                                        placeholder="name">
                             </div>
                         </div>

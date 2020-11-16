@@ -3,6 +3,7 @@ from pkcDjango.models import User
 from pkcDjango.models import File
 from pkcDjango.models import Faq
 from pkcDjango.utils import Utils
+from pkcDjango.models import Analyze
 
 
 def userList(limit=None, order='-id', **filters):
@@ -27,8 +28,8 @@ def userLogin(email, password):
     return user
 
 
-def userJoin(email, password, name, nick):
-    User.objects.create_user(email, password, name=name, nick=nick)
+def userJoin(email, password, name, nick, phone):
+    User.objects.create_user(email, password, name=name, nick=nick, phone=phone)
     joinedUser = User.objects.get(email=email)
     return joinedUser
     # passphrase = Utils.AESCipher().encrypt(password)
@@ -43,6 +44,30 @@ def uploadFile(post, user, img):
     file.originName = img
     file.userKey = user.id
     file.path = img
-    print(img)
     file.save()
-    return file
+    return File.objects.latest("id")
+
+
+def addAnalyze(userId, fileId, resFileId):
+    analyze = Analyze()
+    analyze.userId = userId
+    analyze.fileId = fileId
+    analyze.resFileId = resFileId
+    analyze.save()
+    return analyze
+
+
+def historyList(limit=None, order='-id', **filters):
+    return Analyze.objects.raw(
+        '''
+        SELECT 
+            *,
+            (SELECT originName FROM tblFile WHERE id = A.fileId) AS originName,
+            (SELECT path FROM tblFile WHERE id = A.fileId) AS originPath,
+            (SELECT originName FROM tblFile WHERE id = A.resFileId) AS resName,
+            (SELECT path FROM tblFile WHERE id = A.resFileId) AS resPath 
+        FROM tblAnalyze A
+        WHERE status = 1 
+        ORDER BY regDate DESC
+        '''
+    )

@@ -48,16 +48,22 @@ def uploadFile(post, user, img):
     return File.objects.latest("id")
 
 
-def addAnalyze(userId, fileId, resFileId):
+def addAnalyze(userId, title, fileId, resFileId):
     analyze = Analyze()
     analyze.userId = userId
+    analyze.title = title
     analyze.fileId = fileId
     analyze.resFileId = resFileId
     analyze.save()
     return analyze
 
 
-def historyList(limit=None, order='-id', **filters):
+def historyList(limit=None, order='-id', query=None):
+    whereStmt = "status = 1 "
+    if query:
+        whereStmt += f"AND title LIKE'%%{query}%%'"
+
+    print(whereStmt)
     return Analyze.objects.raw(
         '''
         SELECT 
@@ -67,7 +73,7 @@ def historyList(limit=None, order='-id', **filters):
             (SELECT originName FROM tblFile WHERE id = A.resFileId) AS resName,
             (SELECT path FROM tblFile WHERE id = A.resFileId) AS resPath 
         FROM tblAnalyze A
-        WHERE status = 1 
+        WHERE {}
         ORDER BY regDate DESC
-        '''
+        '''.format(whereStmt)
     )

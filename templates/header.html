@@ -1,5 +1,6 @@
 <script>
     $(document).ready(function(){
+        $("html, body").animate({ scrollTop : $(".testimony-section").offset().top }, 100);
         $("#jLogout").click(function(){
             callJson("/api/userLogout", null, function(){location.href = "/"});
         });

@@ -101,6 +101,7 @@ class Analyze(models.Model):
         verbose_name="id"
     )
     userId = models.IntegerField(default=0)
+    title = models.CharField(max_length=128)
     fileId = models.IntegerField(default=0)
     resFileId = models.IntegerField(default=0)
     status = models.IntegerField(default=1)

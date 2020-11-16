@@ -3,25 +3,19 @@
 {% block js %}
     <script>
         $(document).ready(function(){
+            $(".jSearch").click(() => {
+                let searchText = $(".jSearchText").val();
+                location.href = "/history?query=" + searchText;
+            });
 
+            $(".jSearchText").keydown((event) => {
+                if(event.keyCode === 13) $(".jSearch").trigger("click");
+            });
         });
     </script>
 {% endblock %}
 
 {% block content %}
-{#        {{ user.email }}#}
-{#    {{ user.name }}#}
-{#    {{ returnData.jStr }}#}
-    {% for item in returnData.list %}
-        {{ item.id }}
-        {{ item.originName }}
-        {{ item.originPath }}
-        {{ item.resName }}
-        {{ item.resPath }}
-        {{ item.regDate }}
-    {% endfor %}
-
-
     <section class="hero-wrap hero-wrap-2 js-fullheight" style="background-image: url('/static/images/bg_1.jpg');">
         <div class="overlay"></div>
         <div class="container">
@@ -47,14 +41,10 @@
                         <div class="card">
                             <h5 class="card-header">
                                 분석 내역
-                                {#                                <button type='button' class="col-3 btn btn-primary btn-xs#}
-                                {#                                        btn-block jAdd float-right" uid="0"><i class="fa fa-plus"></i>#}
-                                {#                                    강사 추가#}
-                                {#                                </button>#}
                             </h5>
                             <div class="card-header">
                                 <div class="input-group">
-                                    <input type="text" value="" class="form-control jSearchText" placeholder="제목으로 검색">
+                                    <input type="text" value="{{ request.GET.query }}" class="form-control jSearchText" placeholder="제목으로 검색">
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-primary btn-xs jSearch"><i
                                                 class="fa fa-search"></i> 검색
@@ -77,7 +67,7 @@
                                     {% for item in returnData.list %}
                                         <tr>
                                             <th scope="col">{{ forloop.counter }}</th>
-                                            <td scope="col">test</td>
+                                            <td scope="col">{{ item.title }}</td>
                                             <td scope="col">{{ item.originName }}</td>
                                             <td scope="col">{{ item.resName }}</td>
                                             <td scope="col">{{ item.regDate }}</td>

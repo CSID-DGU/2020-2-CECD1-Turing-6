@@ -52,7 +52,7 @@ def upload(request):
         file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
         if file:
             # NeuralNet.img_seg(file)
-            userSVC.addAnalyze(request.user.id, file.id, 0)
+            userSVC.addAnalyze(request.user.id, request.POST.get("title"), file.id, 0)
             return JsonResponse(Utils.response(1, "succ"))
         else:
             return JsonResponse(Utils.response(2, "파일업로드 실패"))
@@ -69,7 +69,7 @@ def faq(request):
 
 
 def history(request):
-    list = userSVC.historyList(20, '-id')
+    list = userSVC.historyList(20, '-id', request.GET.get("query"))
     jStr = serializers.serialize("json", list)
     data = {"list": list, "jStr": jStr, "user": request.user}
     return render(request, "history.html", Utils.response(1, "", data))

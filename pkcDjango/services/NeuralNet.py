@@ -7,7 +7,7 @@ from PIL import Image, ImageOps
 from albumentations import *
 import torch.nn.functional as F
 from torchvision.utils import save_image
-from carpart import *
+from pytorch.datasets.carpart import *
 import os,sys,json,random
 import cv2
 import numpy as np
@@ -23,7 +23,7 @@ import torch.nn.functional as F
 model_path = "pkcDjango/services/5.pth"
 #image_path
 img_path = "pkcDjango/services/1-1.PNG"
-save_paht = "pkcDjango/services/save.PNG"
+save_path = "pkcDjango/services/save.PNG"
 base_aug = Compose([Resize(512, 512, p=1), ], p=1)
 
 #input ../img.jpg save ../img_seg.png

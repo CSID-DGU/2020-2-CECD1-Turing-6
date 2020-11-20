@@ -7,6 +7,7 @@ from django.core import serializers
 from django.contrib.auth import login, logout
 from .services import userSVC, NeuralNet
 from django.forms.models import model_to_dict
+import os
 
 
 def index(request):
@@ -51,7 +52,8 @@ def upload(request):
         file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
         if file:
             NeuralNet.img_seg(file)
-            return JsonResponse(Utils.response(1, "succ"))
+            save_path = os.path.splitext(str(file.path))[0] + "_seg.png"
+            return JsonResponse(Utils.response(1, save_path))
         else:
             return JsonResponse(Utils.response(2, "파일업로드 실패"))
     else:

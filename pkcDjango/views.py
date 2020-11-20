@@ -1,12 +1,15 @@
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
+import matplotlib
+import matplotlib.pyplot as plt
 from .utils import Utils
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.core import serializers
 from django.contrib.auth import login, logout
 from .services import userSVC, NeuralNet
-from django.forms.models import model_to_dict
+
+matplotlib.use('Agg')
 
 
 def index(request):
@@ -51,9 +54,14 @@ def upload(request):
     if request.method == 'POST':
         file = userSVC.uploadFile(request.POST, request.user, request.FILES['img'])
         if file:
-            # NeuralNet.img_seg(file)
-            userSVC.addAnalyze(request.user.id, request.POST.get("title"), file.id, 0)
-            return JsonResponse(Utils.response(1, "succ"))
+            analyze = userSVC.addAnalyze(request.user.id, request.POST.get("title"), file.id, 0)
+            res = NeuralNet.img_seg(file)
+
+            plt.imshow(res[0])
+            plt.savefig(res[1])
+            plt.close()
+            userSVC.updateAnalyze(res[1], analyze.id)
+            return JsonResponse(Utils.response(1, "succ", res[1]))
         else:
             return JsonResponse(Utils.response(2, "파일업로드 실패"))
     else:

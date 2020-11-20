@@ -19,6 +19,8 @@
 
                 let data = new FormData($("#uploadForm")[0]);
                 // console.log(...data);
+                $(".jPending").show();
+                $(this).prop("disabled", true);
                 $.ajax({
                     type: "POST",
                     enctype: 'multipart/form-data',
@@ -38,9 +40,13 @@
                                 swal("알림" ,  retData.returnMessage, "info");
                             }else {
                                 swal("알림" ,  retData.returnMessage, "success");
-                                //$("img#preview0").after('<img src="/media/'+retData.returnMessage+ '" id="preview1" class="img-thumbnail text-center" />');
+
+                                $(".jRes").append('<img src="'+retData.returnData+ '" id="preview1" class="img-thumbnail text-center" />');
+                                {#$("#analysisRes").attr("src", retData.returnData);#}
+                                $(".jRes").show();
                             }
                         }else swal ( "알림" ,  "오류가 발생하였습니다.\n관리자에게 문의하세요.", "error" );
+                        $(".jBtnArea").hide();
                     },
                     error : function(req, stat, err){
                         console.log("[AJAX ERROR] REQUEST : " + req + " / STATUS : " + stat + " / ERROR : " + err);
@@ -111,13 +117,20 @@
 {#                                <input type="file" class="form-control imgFile" name="img" id="img" idx="0">#}
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6 mb-3">
+                        <div class="container-sm">
+                            <div class="col-12 mb-3">
                                 <img src="" id="preview0" class="img-thumbnail text-center" style="display: none"/>
                             </div>
+                            <div class="col-12 mb-3 jRes" style="display: none">
+                                <img src="" id="analysisRes" class="img_thumbnail text-center"/>
+                            </div>
                         </div>
+
                          <div class="col-md-12">
-                            <div class="form-group">
+                            <div class="form-group jBtnArea">
+                                <div class="spinner-border text-light jPending" role="status" style="display:none;">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
                                 <input type="button" id="upload" value="Upload & Analyze" class="btn btn-primary">
                             </div>
                         </div>

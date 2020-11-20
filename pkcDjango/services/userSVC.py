@@ -1,4 +1,5 @@
 # from pkcDjango.models.user import User
+from django.db import connection
 from pkcDjango.models import User
 from pkcDjango.models import File
 from pkcDjango.models import Faq
@@ -55,7 +56,26 @@ def addAnalyze(userId, title, fileId, resFileId):
     analyze.fileId = fileId
     analyze.resFileId = resFileId
     analyze.save()
-    return analyze
+    return Analyze.objects.latest("id")
+
+
+def updateAnalyze(path, id):
+    print(path)
+    file = File()
+    file.originName = path.replace("media/tempFiles/", "")
+    file.path = path.replace("media/", "")
+    file.save()
+    lastFile = File.objects.latest("id")
+
+    conn = connection.cursor()
+    conn.execute(
+        '''
+        UPDATE tblAnalyze
+            SET
+                resFileId = {}
+        WHERE id = {}
+        '''.format(lastFile.id, id)
+    )
 
 
 def historyList(limit=None, order='-id', query=None):

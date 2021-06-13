@@ -1,6 +1,5 @@
 from django.core import serializers
 import json
-
 import base64
 import hashlib
 from Crypto import Random

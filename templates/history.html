@@ -11,6 +11,11 @@
             $(".jSearchText").keydown((event) => {
                 if(event.keyCode === 13) $(".jSearch").trigger("click");
             });
+
+            $(".jInfo").click(function(){
+                let id = $(this).attr("id");
+                location.href = "/history/info/" + id;
+            });
         });
     </script>
 {% endblock %}
@@ -66,7 +71,7 @@
                                     </thead>
                                     <tbody id="dataContainer">
                                     {% for item in returnData.list %}
-                                        <tr>
+                                        <tr class="jInfo" id="{{ item.id }}">
                                             <th scope="col">{{ forloop.counter }}</th>
                                             <td scope="col">{{ item.title }}</td>
                                             <td scope="col">{{ item.originName }}</td>

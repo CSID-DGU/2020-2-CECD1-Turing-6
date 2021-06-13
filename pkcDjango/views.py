@@ -1,3 +1,5 @@
+import os
+
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 import matplotlib
@@ -81,6 +83,12 @@ def history(request):
     jStr = serializers.serialize("json", list)
     data = {"list": list, "jStr": jStr, "user": request.user}
     return render(request, "history.html", Utils.response(1, "", data))
+
+
+def historyInfo(request, id):
+    item = userSVC.historyItem(id)
+    data = {"item": item, "path": os.environ['IMGPATH'] , "user": request.user}
+    return render(request, "historyInfo.html", Utils.response(1, "", data))
 
 
 def about(request):

@@ -32,6 +32,7 @@ urlpatterns = [
     path('join', views.join, name="join"),
     path('faq', views.faq, name="faq"),
     path('history', views.history, name="history"),
+    path('history/info/<int:id>', views.historyInfo, name="historyInfo"),
 
 
     path('api/userLogin', views.signIn, name=""),

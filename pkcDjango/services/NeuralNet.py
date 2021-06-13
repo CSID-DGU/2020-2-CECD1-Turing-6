@@ -6,7 +6,7 @@ from albumentations import *
 
 from datasets.carpart import *
 
-model_path = "pkcDjango/services/5.pth"
+model_path = "pkcDjango/services/25.pth"
 prefix = "media/tempFiles/"
 base_aug = Compose([Resize(512, 512, p=1), ], p=1)
 

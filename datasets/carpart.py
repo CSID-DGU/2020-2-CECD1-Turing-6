@@ -35,7 +35,7 @@ def resize_with_padding(img, expected_size):
 class CarPart(data.Dataset):
     def __init__(
         self,
-        root="/sdb/CarPart",
+        root="D:\\Documents\\carpart\\CarPart",
         transform=None,
         target_transform=None,
         dataset_name="Carpart",

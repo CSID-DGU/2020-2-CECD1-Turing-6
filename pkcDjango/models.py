@@ -106,5 +106,8 @@ class Analyze(models.Model):
     resFileId = models.IntegerField(default=0)
     status = models.IntegerField(default=1)
 
+    originPath = models.CharField(max_length=128)
+    resPath = models.CharField(max_length=128)
+
     class Meta:
         db_table = "tblAnalyze"

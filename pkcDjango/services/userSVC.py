@@ -97,3 +97,17 @@ def historyList(limit=None, order='-id', query=None):
         ORDER BY regDate DESC
         '''.format(whereStmt)
     )
+
+
+def historyItem(id):
+    return Analyze.objects.raw(
+        '''
+        SELECT 
+            *,
+            (SELECT path FROM tblFile WHERE id = fileId) AS originPath,
+            (SELECT path FROM tblFile WHERE id = resFileId) AS resPath
+        FROM tblAnalyze 
+        WHERE id = {} 
+        LIMIT 1
+        '''.format(id)
+    )[0]
